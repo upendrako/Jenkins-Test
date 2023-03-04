@@ -3,9 +3,8 @@ pipeline {
     stages {
         stage('Deploy') {
             steps {
-                withCredentials([sshUserPrivateKey(credentialsId: 'root', keyFileVariable: 'SSH_KEY_FILE', passphraseVariable: 'SSH_PASSPHRASE', usernameVariable: 'SSH_USER')]) {
-                    sshagent(['root']) {
-                        sh 'ssh -i $SSH_KEY_FILE $SSH_USER@localhost "echo Hello, world!" > /tmp/test.txt'
+                sshagent(credentials:['root']){
+                sh 'ssh  -o StrictHostKeyChecking=no  root@192.168.0.115 uptime "whoami"'
                     }
                 }
             }
